@@ -12,7 +12,6 @@ node_modules
 dist
 # testing
 /coverage
-.save-codes
 
 # next.js
 .next/
