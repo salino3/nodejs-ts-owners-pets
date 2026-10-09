@@ -1,3 +1,4 @@
+import { query } from "../db";
 import { CreateOwner, OwnerProps } from "../interfaces/owners.interfaces";
 
 export class Owner {
@@ -15,5 +16,18 @@ export class Owner {
   }
 
   //
-  static async createOwner(data: CreateOwner) {}
+  static async createOwner(data: CreateOwner): Promise<Owner | null> {
+    const sql = `INSERT INTO owners (name, email, phone)
+    VALUES ($1, $2, $3)
+    RETURING id
+    `;
+
+    const result = await query(sql, [data]);
+
+    if (result.rows.length === 0) {
+      return null;
+    }
+
+    return new Owner(result.rows[0]);
+  }
 }

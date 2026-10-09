@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { utilitiesApp } from "../utils/utilities";
-import { CreateOwner, OwnerProps } from "../interfaces/owners.interfaces";
+import { Owner } from "../models/owner.model";
+import { CreateOwner } from "../interfaces/owners.interfaces";
 
 const { isValidEmail } = utilitiesApp();
 
@@ -16,6 +17,20 @@ class OwnersControllers {
       if (isValidEmail(email)) {
         return res.status(401).send("Email format is incorrect");
       }
-    } catch (error) {}
+
+      const result: Owner | null = await Owner.createOwner({
+        name,
+        email,
+        phone,
+      });
+
+      if (!result) {
+        throw new Error();
+      }
+
+      return res.status(201).send({ id: result });
+    } catch (err: unknown) {
+      return res.status(500).send({ error: "Internal server error:", err });
+    }
   }
 }
