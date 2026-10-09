@@ -19,11 +19,12 @@ export class Owner {
   static async createOwner(data: CreateOwner): Promise<Owner | null> {
     const sql = `INSERT INTO owners (name, email, phone)
     VALUES ($1, $2, $3)
-    RETURING id
+    RETURNING id
     `;
 
-    const result = await query(sql, [data]);
+    const { name, email, phone } = data as CreateOwner;
 
+    const result = await query(sql, [name, email, phone]);
     if (result.rows.length === 0) {
       return null;
     }

@@ -9,12 +9,11 @@ class OwnersControllers {
   async fnCreateOwner(req: Request, res: Response): Promise<Response> {
     try {
       const { name, email, phone } = req.body as CreateOwner;
-
       if (!name || !email) {
         return res.status(401).send("Name and Email values are mandatory");
       }
 
-      if (isValidEmail(email)) {
+      if (!isValidEmail(email)) {
         return res.status(401).send("Email format is incorrect");
       }
 
@@ -28,7 +27,7 @@ class OwnersControllers {
         throw new Error();
       }
 
-      return res.status(201).send({ id: result });
+      return res.status(201).send(result);
     } catch (err: unknown) {
       return res.status(500).send({ error: "Internal server error:", err });
     }
