@@ -34,3 +34,5 @@ class OwnersControllers {
     }
   }
 }
+
+export const ownersControllers = new OwnersControllers();
