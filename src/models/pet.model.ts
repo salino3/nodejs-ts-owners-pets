@@ -15,6 +15,7 @@ export class Pet {
     this.owner_id = data.owner_id;
     this.name = data.name;
     this.species = data.species;
+    this.breed = data.breed;
     this.age = data.age;
     this.microchip_id = data.microchip_id;
     this.created_at = data.created_at;
