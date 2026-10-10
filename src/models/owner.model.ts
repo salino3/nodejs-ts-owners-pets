@@ -12,6 +12,7 @@ export class Owner {
     this.id = data.id;
     this.name = data.name;
     this.email = data.email;
+    this.phone = data.phone;
     this.created_at = data.created_at;
   }
 
@@ -19,7 +20,7 @@ export class Owner {
   static async createOwner(data: CreateOwner): Promise<Owner | null> {
     const sql = `INSERT INTO owners (name, email, phone)
     VALUES ($1, $2, $3)
-    RETURNING id
+    RETURNING *
     `;
 
     const { name, email, phone } = data as CreateOwner;
