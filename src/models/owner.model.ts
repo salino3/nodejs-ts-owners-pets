@@ -12,6 +12,7 @@ export class Owner {
     this.id = data.id;
     this.name = data.name;
     this.email = data.email;
+    this.phone = data.phone;
     this.created_at = data.created_at;
   }
 
