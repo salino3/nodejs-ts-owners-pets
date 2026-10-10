@@ -6,7 +6,7 @@ import { CreateOwner } from "../interfaces/owners.interfaces";
 const { isValidEmail } = utilitiesApp();
 
 class OwnersControllers {
-  async fnCreateOwner(req: Request, res: Response): Promise<Response> {
+  async fnCreateOwner(req: Request, res: Response): Promise<Response<Owner>> {
     try {
       const { name, email, phone } = req.body as CreateOwner;
       if (!name || !email) {
