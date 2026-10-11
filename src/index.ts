@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
 import { QueryResult } from "pg";
-import http2 from "http2";
+// import http2 from "http2";
+import https from "https";
 import express, { Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -49,12 +50,23 @@ app.get("/test-db", async (req: Request, res: Response): Promise<Response> => {
   }
 });
 
+//* HTTPS2
 // Uploading local SSL certificates
-const credentials: http2.SecureServerOptions = {
+// const credentials: http2.SecureServerOptions = {
+//   key: fs.readFileSync(path.join(currentDir, "../key.pem")),
+//   cert: fs.readFileSync(path.join(currentDir, "../cert.pem")),
+// };
+
+// http2.createSecureServer(credentials, app as any).listen(Number(PORT), () => {
+//   console.log(`🚀 Server HTTP/2 up and running at https://localhost:${PORT}`);
+// });
+
+//*HHTPS1
+const credentials = {
   key: fs.readFileSync(path.join(currentDir, "../key.pem")),
   cert: fs.readFileSync(path.join(currentDir, "../cert.pem")),
 };
 
-http2.createSecureServer(credentials, app as any).listen(Number(PORT), () => {
-  console.log(`🚀 Server HTTP/2 up and running at https://localhost:${PORT}`);
+https.createServer(credentials, app as any).listen(Number(PORT), () => {
+  console.log(`🚀 Server HTTPS up and running at https://localhost:${PORT}`);
 });
