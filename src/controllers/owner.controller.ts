@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { utilitiesApp } from "../utils/utilities";
 import { Owner } from "../models/owner.model";
-import { CreateOwner } from "../interfaces/owners.interfaces";
+import { CreateOwner, GetOwner } from "../interfaces/owners.interfaces";
 
 const { isValidEmail } = utilitiesApp();
 
@@ -28,6 +28,20 @@ class OwnersControllers {
       }
 
       return res.status(201).send(result);
+    } catch (err: unknown) {
+      return res.status(500).send({ error: "Internal server error:", err });
+    }
+  }
+
+  //
+  async fnGetAllOwners(
+    req: Request,
+    res: Response,
+  ): Promise<Response<GetOwner[]>> {
+    try {
+      const owners: GetOwner[] = await Owner.getAllOwners();
+
+      return res.status(200).json(owners);
     } catch (err: unknown) {
       return res.status(500).send({ error: "Internal server error:", err });
     }

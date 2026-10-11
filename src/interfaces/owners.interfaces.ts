@@ -7,3 +7,5 @@ export interface OwnerProps {
 }
 
 export interface CreateOwner extends Omit<OwnerProps, "id" | "created_at"> {}
+
+export interface GetOwner extends Omit<OwnerProps, "created_at"> {}

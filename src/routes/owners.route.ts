@@ -5,4 +5,6 @@ const routerOwner = express.Router();
 
 routerOwner.post("/owners", ownersControllers.fnCreateOwner);
 
+routerOwner.get("/owners", ownersControllers.fnGetAllOwners);
+
 export default routerOwner;

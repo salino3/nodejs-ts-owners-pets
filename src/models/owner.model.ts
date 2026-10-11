@@ -1,5 +1,9 @@
 import { query } from "../db";
-import { CreateOwner, OwnerProps } from "../interfaces/owners.interfaces";
+import {
+  CreateOwner,
+  GetOwner,
+  OwnerProps,
+} from "../interfaces/owners.interfaces";
 
 export class Owner {
   id: number;
@@ -31,5 +35,19 @@ export class Owner {
     }
 
     return new Owner(result.rows[0]);
+  }
+
+  //
+  static async getAllOwners(): Promise<GetOwner[]> {
+    const sql = `
+      SELECT COALESCE(
+     json_agg(to_jsonb(owners) - '{created_at}'::text[]), 
+     '[]'::json
+   ) AS owners_list 
+    FROM owners;
+ `;
+    const result = await query(sql);
+
+    return result.rows[0]?.owners_list ?? [];
   }
 }
