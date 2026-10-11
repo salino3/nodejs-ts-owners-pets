@@ -51,6 +51,7 @@ export class Owner {
     return result.rows[0]?.owners_list ?? [];
   }
 
+  //
   static async getOwnerByID(id: number | string): Promise<GetOwner | null> {
     const sql = `
     SELECT to_jsonb(owners) - 'created_at' AS owner
@@ -62,6 +63,7 @@ export class Owner {
     return result.rows[0].owner ?? null;
   }
 
+  //
   static async deleteOwnerByID(id: number | string): Promise<boolean> {
     const sql = `
     DELETE FROM owners
@@ -70,5 +72,38 @@ export class Owner {
     const result = await query(sql, [Number(id)]);
 
     return result.rowCount ? result.rowCount > 0 : false;
+  }
+
+  //
+  static async updateOwnerByID(
+    id: number | string,
+    data: Partial<CreateOwner>,
+  ): Promise<GetOwner | null> {
+    const fields: string[] = [];
+    const values: unknown[] = [];
+
+    for (const [key, value] of Object.entries(data)) {
+      if (value !== undefined) {
+        values.push(value);
+        fields.push(`${key} = $${values.length}`);
+      }
+    }
+
+    if (fields.length === 0) {
+      return null;
+    }
+
+    values.push(Number(id));
+
+    const sql = `
+    UPDATE owners
+    SET ${fields.join(", ")}
+    WHERE id = $${values.length}
+    RETURNING to_jsonb(owners) - 'created_at' AS owner;
+  `;
+
+    const result = await query(sql, values);
+
+    return result.rows[0]?.owner ?? null;
   }
 }
