@@ -82,6 +82,30 @@ class OwnersControllers {
       });
     }
   }
+
+  //
+  async fnDeleteOwnerByID(
+    req: Request,
+    res: Response,
+  ): Promise<Response<boolean>> {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).send("Error: Owner ID is mandatory");
+      }
+
+      const result: boolean = await Owner.deleteOwnerByID(id as string);
+
+      if (!result) {
+        return res.status(404).send("Error: Owner Not Found");
+      }
+
+      return res.status(200).send("Owner successfully deleted");
+    } catch (err: unknown) {
+      return res.status(500).send({ error: "Internal server error:", err });
+    }
+  }
 }
 
 export const ownersControllers = new OwnersControllers();

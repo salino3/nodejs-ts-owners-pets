@@ -9,4 +9,6 @@ routerOwner.get("/owners", ownersControllers.fnGetAllOwners);
 
 routerOwner.get("/owners/:id", ownersControllers.fnGetOwnerByID);
 
+routerOwner.delete("/owners/:id", ownersControllers.fnDeleteOwnerByID);
+
 export default routerOwner;

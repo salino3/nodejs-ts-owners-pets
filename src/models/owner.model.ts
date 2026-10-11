@@ -61,4 +61,14 @@ export class Owner {
 
     return result.rows[0].owner ?? null;
   }
+
+  static async deleteOwnerByID(id: number | string): Promise<boolean> {
+    const sql = `
+    DELETE FROM owners
+    WHERE id = $1;`;
+
+    const result = await query(sql, [Number(id)]);
+
+    return result.rowCount ? result.rowCount > 0 : false;
+  }
 }
