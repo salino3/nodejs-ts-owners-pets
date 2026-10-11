@@ -41,6 +41,7 @@ docs*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-
+# 
 key.pem
 cert.pem
+generate-cert.mjs
