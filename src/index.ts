@@ -9,7 +9,7 @@ import { query } from "./db";
 import routerOwner from "./routes/owners.route";
 import { FRONTEND_DEV_PORT, FRONTEND_PROD_PORT, PORT } from "./constants";
 
-// @ts-ignore (Ignora l'avviso di TypeScript, tanto a runtime Node.js v24 lo esegue perfettamente)
+// @ts-ignore
 const currentDir = import.meta.dirname;
 
 const app = express();
@@ -28,7 +28,6 @@ app.use(
 
 app.use("/api", routerOwner);
 
-// Registra le tue rotte (assicurati di metterle prima di createSecureServer/listen)
 app.get("/health", (req: Request, res: Response) =>
   res.json({ status: "online", project: "nodejs-ts-owners-pets" }),
 );
@@ -50,7 +49,7 @@ app.get("/test-db", async (req: Request, res: Response): Promise<Response> => {
   }
 });
 
-// Caricamento dei certificati SSL locali
+// Uploading local SSL certificates
 const credentials: http2.SecureServerOptions = {
   key: fs.readFileSync(path.join(currentDir, "../key.pem")),
   cert: fs.readFileSync(path.join(currentDir, "../cert.pem")),
