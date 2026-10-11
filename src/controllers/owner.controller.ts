@@ -46,6 +46,42 @@ class OwnersControllers {
       return res.status(500).send({ error: "Internal server error:", err });
     }
   }
+
+  async fnGetOwnerByID(
+    req: Request,
+    res: Response,
+  ): Promise<Response<GetOwner>> {
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).send("Error: Owner ID is mandatory");
+      }
+
+      const result: GetOwner | null = await Owner.getOwnerByID(id as string);
+
+      if (!result || !result.id) {
+        return res.status(404).send("Error: Owner Not Found");
+      }
+
+      return res.status(200).json(result);
+    } catch (err: unknown) {
+      console.error("Error in fnGetOwnerByID:", err);
+
+      if (err instanceof Error) {
+        return res.status(500).json({
+          error: "Internal server error",
+          message: err.message,
+          stack: err.stack,
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error",
+        message: String(err),
+      });
+    }
+  }
 }
 
 export const ownersControllers = new OwnersControllers();

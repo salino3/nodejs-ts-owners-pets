@@ -50,4 +50,15 @@ export class Owner {
 
     return result.rows[0]?.owners_list ?? [];
   }
+
+  static async getOwnerByID(id: number | string): Promise<GetOwner | null> {
+    const sql = `
+    SELECT to_jsonb(owners) - 'created_at' AS owner
+    FROM owners
+    WHERE id = $1;`;
+
+    const result = await query(sql, [Number(id)]);
+
+    return result.rows[0].owner ?? null;
+  }
 }

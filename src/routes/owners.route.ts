@@ -7,4 +7,6 @@ routerOwner.post("/owners", ownersControllers.fnCreateOwner);
 
 routerOwner.get("/owners", ownersControllers.fnGetAllOwners);
 
+routerOwner.get("/owners/:id", ownersControllers.fnGetOwnerByID);
+
 export default routerOwner;
