@@ -1,0 +1,25 @@
+nodejs-ts-owners-pets/
+├── .env
+├── .gitignore
+├── generate-cert.mjs
+├── generate-tree.ts
+├── package.json
+├── project-structure.txt
+├── src/
+│   ├── constants.ts
+│   ├── controllers/
+│   │   └── owner.controller.ts
+│   ├── db.ts
+│   ├── index.ts
+│   ├── interfaces/
+│   │   ├── owners.interfaces.ts
+│   │   └── pets.interfaces.ts
+│   ├── models/
+│   │   ├── owner.model.ts
+│   │   └── pet.model.ts
+│   ├── routes/
+│   │   └── owners.route.ts
+│   ├── store/
+│   └── utils/
+│       └── utilities.ts
+└── tsconfig.json
