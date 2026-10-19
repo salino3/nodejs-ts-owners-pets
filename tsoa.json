@@ -4,7 +4,8 @@
   "controllerPathGlobs": ["src/controllers/**/*.controller.ts"],
   "spec": {
     "outputDirectory": "src/generated",
-    "specVersion": 3
+    "specVersion": 3,
+    "baseUrl": "https://localhost:3000"
   },
   "routes": {
     "routesDir": "src/generated"
